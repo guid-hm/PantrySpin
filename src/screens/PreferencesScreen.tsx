@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePrefs, useUpdatePrefs } from "@/lib/api/prefs";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
@@ -14,6 +14,19 @@ export function PreferencesScreen() {
   const [email,    setEmail]    = useState("");
   const [sending,  setSending]  = useState(false);
   const [linkSent, setLinkSent] = useState(false);
+  const [linkMode, setLinkMode] = useState<"upgrade" | "signin">("upgrade");
+
+  // Local state for sliders — prevents a mutation on every pixel of drag
+  const [localMaxTime,  setLocalMaxTime]  = useState(prefs?.maxTime  ?? 30);
+  const [localServings, setLocalServings] = useState(prefs?.servings ?? 2);
+
+  // Sync once when prefs first load from server
+  useEffect(() => {
+    if (prefs) {
+      setLocalMaxTime(prefs.maxTime);
+      setLocalServings(prefs.servings);
+    }
+  }, [prefs?.maxTime, prefs?.servings]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const p = prefs ?? {
     diet: "No preference", avoid: [], maxTime: 30, difficulty: "Easy", servings: 2, priority: "use-what-i-have" as const,
@@ -27,12 +40,34 @@ export function PreferencesScreen() {
   const handleUpgrade = async () => {
     if (!email.trim()) return;
     setSending(true);
+
     const { error } = await supabase.auth.updateUser({ email: email.trim() });
-    setSending(false);
-    if (error) {
-      showToast("Error: " + error.message);
-    } else {
+
+    if (!error) {
+      setSending(false);
+      setLinkMode("upgrade");
       setLinkSent(true);
+      return;
+    }
+
+    // "User already registered" — this device is anonymous but the email already
+    // has an account. Fall back to a magic-link sign-in so they can recover it.
+    const alreadyExists = error.message.toLowerCase().includes("already") || error.status === 422;
+    if (alreadyExists) {
+      const { error: otpError } = await supabase.auth.signInWithOtp({
+        email: email.trim(),
+        options: { shouldCreateUser: false },
+      });
+      setSending(false);
+      if (otpError) {
+        showToast("Error: " + otpError.message);
+      } else {
+        setLinkMode("signin");
+        setLinkSent(true);
+      }
+    } else {
+      setSending(false);
+      showToast("Error: " + error.message);
     }
   };
 
@@ -69,7 +104,9 @@ export function PreferencesScreen() {
               {linkSent ? (
                 <div style={{ marginTop: 12, fontSize: 13, color: "var(--ps-basil-deep)", fontWeight: 600, display: "flex", alignItems: "center", gap: 6 }}>
                   <Icon n="mail-check" style={{ width: 15, height: 15 }} />
-                  Check your email for a confirmation link.
+                  {linkMode === "signin"
+                    ? "Sign-in link sent — check your email. Your data will be restored when you click it."
+                    : "Confirmation link sent — check your email to secure your account."}
                 </div>
               ) : (
                 <div className="account-email-row">
@@ -141,10 +178,11 @@ export function PreferencesScreen() {
             min={10}
             max={90}
             step={5}
-            value={p.maxTime}
-            onChange={(e) => updatePrefs.mutate({ maxTime: Number(e.target.value) })}
+            value={localMaxTime}
+            onChange={(e) => setLocalMaxTime(Number(e.target.value))}
+            onPointerUp={(e) => updatePrefs.mutate({ maxTime: Number((e.target as HTMLInputElement).value) })}
           />
-          <div className="v">{p.maxTime} <span style={{ fontSize: 13, color: "var(--ps-charcoal-3)" }}>min</span></div>
+          <div className="v">{localMaxTime} <span style={{ fontSize: 13, color: "var(--ps-charcoal-3)" }}>min</span></div>
         </div>
       </div>
 
@@ -173,10 +211,11 @@ export function PreferencesScreen() {
             min={1}
             max={8}
             step={1}
-            value={p.servings}
-            onChange={(e) => updatePrefs.mutate({ servings: Number(e.target.value) })}
+            value={localServings}
+            onChange={(e) => setLocalServings(Number(e.target.value))}
+            onPointerUp={(e) => updatePrefs.mutate({ servings: Number((e.target as HTMLInputElement).value) })}
           />
-          <div className="v">{p.servings}</div>
+          <div className="v">{localServings}</div>
         </div>
       </div>
 

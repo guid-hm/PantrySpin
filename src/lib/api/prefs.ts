@@ -47,19 +47,30 @@ export function useUpdatePrefs() {
   return useMutation({
     mutationFn: async (partial: Partial<ServerPrefs>) => {
       const patch: Record<string, unknown> = { user_id: userId, updated_at: new Date().toISOString() };
-      if (partial.diet      !== undefined) patch.diet       = partial.diet;
-      if (partial.avoid     !== undefined) patch.avoid      = partial.avoid;
-      if (partial.maxTime   !== undefined) patch.max_time   = partial.maxTime;
+      if (partial.diet       !== undefined) patch.diet       = partial.diet;
+      if (partial.avoid      !== undefined) patch.avoid      = partial.avoid;
+      if (partial.maxTime    !== undefined) patch.max_time   = partial.maxTime;
       if (partial.difficulty !== undefined) patch.difficulty = partial.difficulty;
-      if (partial.servings  !== undefined) patch.servings   = partial.servings;
-      if (partial.priority  !== undefined) patch.priority   = partial.priority;
-      if (partial.onboarded !== undefined) patch.onboarded  = partial.onboarded;
+      if (partial.servings   !== undefined) patch.servings   = partial.servings;
+      if (partial.priority   !== undefined) patch.priority   = partial.priority;
+      if (partial.onboarded  !== undefined) patch.onboarded  = partial.onboarded;
       const { error } = await supabase
         .from("user_prefs")
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .upsert(patch as any, { onConflict: "user_id" });
       if (error) throw error;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["prefs", userId] }),
+    onMutate: async (partial) => {
+      await qc.cancelQueries({ queryKey: ["prefs", userId] });
+      const prev = qc.getQueryData<ServerPrefs>(["prefs", userId]);
+      qc.setQueryData<ServerPrefs>(["prefs", userId], (old) =>
+        old ? { ...old, ...partial } : old
+      );
+      return { prev };
+    },
+    onError: (_err, _partial, ctx) => {
+      if (ctx?.prev) qc.setQueryData(["prefs", userId], ctx.prev);
+    },
+    onSettled: () => qc.invalidateQueries({ queryKey: ["prefs", userId] }),
   });
 }
