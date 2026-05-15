@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "./supabase";
+import { AuthScreen } from "@/screens/AuthScreen";
 
 interface AuthCtx {
   user: User | null;
@@ -16,15 +17,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(async ({ data }) => {
-      if (data.session) {
-        setSession(data.session);
-        setLoading(false);
-      } else {
-        const { data: anonData } = await supabase.auth.signInAnonymously();
-        setSession(anonData.session);
-        setLoading(false);
-      }
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setLoading(false);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
@@ -36,15 +31,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const isAnonymous = session?.user?.is_anonymous ?? true;
 
+  if (loading) {
+    return (
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}>
+        <div style={{ color: "var(--ps-charcoal-3)", fontSize: 14 }}>Loading…</div>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return <AuthScreen />;
+  }
+
   return (
-    <AuthContext.Provider value={{ user: session?.user ?? null, session, loading, isAnonymous }}>
-      {loading ? (
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}>
-          <div style={{ color: "var(--ps-charcoal-3)", fontSize: 14 }}>Loading…</div>
-        </div>
-      ) : (
-        children
-      )}
+    <AuthContext.Provider value={{ user: session.user, session, loading, isAnonymous }}>
+      {children}
     </AuthContext.Provider>
   );
 }

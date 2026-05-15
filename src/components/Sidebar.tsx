@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { Icon } from "./Icon";
+import { AccountMenu } from "./AccountMenu";
 import { usePantry } from "@/lib/api/pantry";
 import { useRecipes } from "@/lib/api/recipes";
 import { useSaved } from "@/lib/api/saved";
@@ -47,13 +48,7 @@ export function Sidebar() {
         </NavLink>
       ))}
 
-      <div className="sidebar-foot">
-        <div className="av"></div>
-        <div>
-          <div className="name">My Kitchen</div>
-          <div className="sub">Free plan</div>
-        </div>
-      </div>
+      <AccountMenu />
     </aside>
   );
 }
