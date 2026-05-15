@@ -181,7 +181,7 @@ export function EditRecipeModal() {
           </div>
           <div className="form-row">
             <label className="form-label">Difficulty</label>
-            <select className="form-input bare" value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+            <select className="form-input bare" value={difficulty} onChange={(e) => setDifficulty(e.target.value as "Easy" | "Medium" | "Hard")}>
               <option>Easy</option><option>Medium</option><option>Hard</option>
             </select>
           </div>

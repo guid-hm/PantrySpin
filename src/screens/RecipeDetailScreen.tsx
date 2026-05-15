@@ -36,7 +36,6 @@ export function RecipeDetailScreen() {
   const toggleSaved    = useToggleSaved();
   const addGrocery     = useAddGroceryItems();
   const showToast      = useAppStore((s) => s.showToast);
-  const setCookRecipeId = useAppStore((s) => s.setRevealRecipeId);
 
   const [cookingOpen, setCookingOpen] = useState(false);
 

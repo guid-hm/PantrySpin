@@ -20,7 +20,7 @@ function kebabToPascal(name: string): string {
 
 export function Icon({ n, size = 16, sw = 2, color, className, style }: IconProps) {
   const pascal = kebabToPascal(n);
-  const Comp = (LucideIcons as Record<string, React.ComponentType<LucideProps>>)[pascal];
+  const Comp = (LucideIcons as unknown as Record<string, React.ComponentType<LucideProps>>)[pascal];
   if (!Comp) return null;
 
   const resolvedSize = (style?.width as number) ?? (style?.height as number) ?? size;

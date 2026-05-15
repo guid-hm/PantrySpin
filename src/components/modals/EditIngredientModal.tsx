@@ -46,7 +46,7 @@ export function EditIngredientModal() {
     ? (ingData(item.name, customIngs, ingOverrides) ?? { cat: "Other" as IngredientCategory, color: "#8A857D", swatch: "#E7DEC8" })
     : null;
 
-  const [name,     setName]     = useState(item?.name     ?? "");
+  const [name] = useState(item?.name ?? "");
   const [qty,      setQty]      = useState(item?.qty      ?? "");
   const [unit,     setUnit]     = useState(item?.unit     ?? "");
   const [location, setLocation] = useState<(typeof LOCATION_OPTIONS)[number]>((item?.location as (typeof LOCATION_OPTIONS)[number]) ?? "Pantry");

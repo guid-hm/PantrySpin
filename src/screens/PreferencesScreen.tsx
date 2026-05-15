@@ -29,7 +29,7 @@ export function PreferencesScreen() {
   }, [prefs?.maxTime, prefs?.servings]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const p = prefs ?? {
-    diet: "No preference", avoid: [], maxTime: 30, difficulty: "Easy", servings: 2, priority: "use-what-i-have" as const,
+    diet: "No preference", avoid: [] as string[], maxTime: 30, difficulty: "Easy", servings: 2, priority: "use-what-i-have" as const,
   };
 
   const toggle = (value: string) => {
