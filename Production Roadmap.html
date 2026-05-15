@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PantrySpin — Production Roadmap</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/pantryspin-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ps-tomato:#E94F37; --ps-tomato-deep:#C8371F; --ps-tomato-soft:#FBE1DA;
+  --ps-butter:#FFD166; --ps-butter-deep:#E6B43A; --ps-butter-soft:#FFF1CC;
+  --ps-basil:#2A9D8F; --ps-basil-deep:#1F7A6F; --ps-basil-soft:#D4ECE9;
+  --ps-cream:#FFF7E8; --ps-cream-deep:#F5EAD0; --ps-paper:#FFFBF1;
+  --ps-charcoal:#2D2A26; --ps-charcoal-2:#524E48; --ps-charcoal-3:#8A857D;
+  --ps-line:#E7DEC8; --ps-line-strong:#D6C9A8;
+  --font-display:"Fraunces","Georgia",serif;
+  --font-sans:"Inter",-apple-system,system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --shadow-sm:0 2px 6px rgba(45,42,38,.08);
+  --shadow-md:0 8px 24px rgba(45,42,38,.10);
+  --shadow-lg:0 18px 40px rgba(45,42,38,.14);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ps-cream);color:var(--ps-charcoal);font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
+a{color:var(--ps-basil-deep);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--ps-tomato)}
+
+.doc{max-width:920px;margin:0 auto;padding:64px 56px 120px}
+
+/* ===== Masthead ===== */
+.masthead{
+  background:var(--ps-paper);
+  border:1px solid var(--ps-line);
+  border-radius:32px;
+  padding:48px 56px;
+  margin-bottom:48px;
+  position:relative;
+  overflow:hidden;
+}
+.masthead::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 88% 18%, rgba(233,79,55,.18) 0%, transparent 36%),
+    radial-gradient(circle at 12% 90%, rgba(42,157,143,.12) 0%, transparent 42%),
+    radial-gradient(circle at 60% 60%, rgba(255,209,102,.18) 0%, transparent 40%);
+  pointer-events:none;
+}
+.masthead > *{position:relative;z-index:1}
+.wm{
+  font-family:var(--font-display);font-weight:800;font-size:22px;letter-spacing:-.02em;
+  display:inline-flex;align-items:center;gap:10px;
+}
+.wm .spin{color:var(--ps-tomato)}
+.wm .mark{
+  width:32px;height:32px;border-radius:999px;background:var(--ps-tomato);color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;font-size:14px;
+  font-family:var(--font-display);font-weight:800;
+}
+.eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ps-basil-deep);margin:24px 0 14px;
+}
+h1.title{
+  font-family:var(--font-display);font-weight:700;
+  font-size:64px;letter-spacing:-.025em;line-height:1.02;
+  margin:0 0 18px;text-wrap:balance;max-width:680px;
+}
+h1.title .accent{color:var(--ps-tomato)}
+h1.title .accent2{color:var(--ps-basil)}
+.lede{
+  font-family:var(--font-display);font-weight:400;font-style:italic;
+  font-size:21px;line-height:1.5;color:var(--ps-charcoal-2);
+  max-width:620px;margin:0;text-wrap:pretty;
+}
+
+.meta-strip{
+  display:flex;gap:32px;flex-wrap:wrap;
+  margin-top:36px;padding-top:24px;
+  border-top:1px solid var(--ps-line);
+}
+.meta-item .l{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ps-charcoal-3);margin-bottom:4px}
+.meta-item .v{font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:-.01em}
+
+/* ===== TL;DR rail ===== */
+.tldr{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  margin-bottom:64px;
+}
+.tldr-card{
+  background:var(--ps-paper);
+  border:1px solid var(--ps-line);
+  border-radius:18px;padding:20px 22px;
+}
+.tldr-card .num{
+  font-family:var(--font-display);font-weight:700;font-size:36px;
+  letter-spacing:-.02em;line-height:1;
+}
+.tldr-card.tomato .num{color:var(--ps-tomato)}
+.tldr-card.basil .num{color:var(--ps-basil)}
+.tldr-card.butter .num{color:var(--ps-butter-deep)}
+.tldr-card .l{font-size:12px;font-weight:600;color:var(--ps-charcoal-2);margin-top:6px;line-height:1.4}
+
+/* ===== Section ===== */
+section.phase{
+  margin-bottom:56px;
+  scroll-margin-top:24px;
+}
+.phase-head{
+  display:flex;align-items:flex-start;gap:20px;
+  margin-bottom:20px;
+}
+.phase-num{
+  font-family:var(--font-display);font-weight:700;font-size:48px;
+  color:var(--ps-tomato);letter-spacing:-.02em;line-height:1;
+  flex:0 0 auto;min-width:64px;
+}
+.phase-head-text{flex:1}
+.phase-eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ps-charcoal-3);margin-bottom:6px;
+  display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+}
+.phase-eyebrow .dot{width:4px;height:4px;border-radius:999px;background:var(--ps-line-strong)}
+.phase-eyebrow .effort{color:var(--ps-basil-deep)}
+h2.phase-title{
+  font-family:var(--font-display);font-weight:700;
+  font-size:38px;letter-spacing:-.02em;line-height:1.05;
+  margin:0 0 12px;text-wrap:balance;
+}
+.phase-intro{
+  font-size:17px;line-height:1.6;color:var(--ps-charcoal-2);
+  margin:0;max-width:680px;text-wrap:pretty;
+}
+
+/* ===== Task list ===== */
+.tasks{
+  list-style:none;padding:0;margin:24px 0 0;
+  display:flex;flex-direction:column;gap:10px;
+}
+.tasks li{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:16px 20px;
+  background:var(--ps-paper);
+  border:1px solid var(--ps-line);
+  border-radius:14px;
+}
+.tasks li .check{
+  width:22px;height:22px;border-radius:7px;
+  border:2px solid var(--ps-line-strong);
+  background:var(--ps-cream);
+  flex:0 0 22px;margin-top:1px;
+}
+.tasks li .body{flex:1;font-size:15px;line-height:1.55}
+.tasks li .body b{font-weight:600;color:var(--ps-charcoal)}
+.tasks li .body .sub{display:block;color:var(--ps-charcoal-2);margin-top:4px;font-size:14px}
+.tasks li .badge{
+  flex:0 0 auto;align-self:flex-start;
+  font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 9px;border-radius:999px;
+  background:var(--ps-cream-deep);color:var(--ps-charcoal-2);
+}
+.tasks li .badge.must{background:var(--ps-tomato);color:#fff}
+.tasks li .badge.soon{background:var(--ps-butter);color:var(--ps-charcoal)}
+.tasks li .badge.later{background:var(--ps-basil-soft);color:var(--ps-basil-deep)}
+.tasks li code, .body code{
+  font-family:var(--font-mono);font-size:.88em;
+  background:var(--ps-butter-soft);border:1px solid var(--ps-line);
+  padding:1px 6px;border-radius:6px;color:var(--ps-charcoal);
+}
+
+/* ===== Callout ===== */
+.callout{
+  display:flex;gap:14px;
+  margin-top:18px;padding:16px 20px;
+  background:var(--ps-basil-soft);
+  border:1px solid var(--ps-basil);
+  border-radius:14px;
+}
+.callout.warn{background:var(--ps-butter-soft);border-color:var(--ps-butter)}
+.callout.alert{background:var(--ps-tomato-soft);border-color:var(--ps-tomato)}
+.callout .ic{
+  width:24px;height:24px;border-radius:999px;
+  background:var(--ps-basil);color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:700;font-size:14px;
+  flex:0 0 24px;
+}
+.callout.warn .ic{background:var(--ps-butter-deep)}
+.callout.alert .ic{background:var(--ps-tomato)}
+.callout .ctext{font-size:14.5px;line-height:1.55;color:var(--ps-charcoal-2)}
+.callout .ctext strong{color:var(--ps-charcoal);font-weight:600}
+
+/* ===== Stack pill row ===== */
+.stack{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;
+}
+.stack .pill{
+  font-family:var(--font-mono);font-size:12px;font-weight:500;
+  padding:6px 12px;border-radius:999px;
+  background:var(--ps-cream);border:1px solid var(--ps-line);
+  color:var(--ps-charcoal);
+}
+.stack .pill.primary{background:var(--ps-charcoal);color:var(--ps-cream);border-color:var(--ps-charcoal)}
+.stack .label{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ps-charcoal-3);align-self:center;margin-right:6px;
+}
+
+/* ===== Code block ===== */
+pre.code{
+  font-family:var(--font-mono);font-size:13px;line-height:1.6;
+  background:var(--ps-charcoal);color:var(--ps-cream);
+  padding:20px 24px;border-radius:16px;
+  overflow-x:auto;margin:18px 0 0;
+}
+pre.code .c{color:var(--ps-charcoal-3)}
+pre.code .k{color:var(--ps-butter)}
+pre.code .s{color:var(--ps-basil-soft)}
+
+/* ===== Schema table ===== */
+.schema{
+  margin-top:20px;
+  background:var(--ps-paper);
+  border:1px solid var(--ps-line);
+  border-radius:16px;overflow:hidden;
+}
+.schema-head{
+  padding:12px 18px;
+  font-family:var(--font-mono);font-size:12px;font-weight:600;
+  color:var(--ps-charcoal-2);
+  background:var(--ps-cream-deep);
+  border-bottom:1px solid var(--ps-line);
+  display:flex;align-items:center;gap:8px;
+}
+.schema-head .tbl{color:var(--ps-tomato-deep);font-weight:700}
+.schema table{width:100%;border-collapse:collapse}
+.schema td, .schema th{
+  text-align:left;font-size:13.5px;
+  padding:9px 18px;border-bottom:1px solid var(--ps-line);
+}
+.schema tr:last-child td{border-bottom:0}
+.schema td:nth-child(1){font-family:var(--font-mono);font-weight:600;color:var(--ps-charcoal);width:35%}
+.schema td:nth-child(2){font-family:var(--font-mono);color:var(--ps-tomato-deep);width:22%;font-size:12.5px}
+.schema td:nth-child(3){color:var(--ps-charcoal-2)}
+
+/* ===== Open questions ===== */
+.qa{
+  background:var(--ps-paper);
+  border:1px solid var(--ps-line);
+  border-radius:20px;padding:28px 32px;
+  margin-top:24px;
+}
+.qa h3{
+  font-family:var(--font-display);font-weight:700;font-size:18px;
+  letter-spacing:-.01em;margin:0 0 6px;
+}
+.qa p{font-size:14.5px;line-height:1.55;color:var(--ps-charcoal-2);margin:0 0 22px;max-width:640px}
+.qa .q{
+  padding:14px 0;border-top:1px solid var(--ps-line);
+  display:flex;gap:14px;align-items:flex-start;
+}
+.qa .q:first-of-type{border-top:0;padding-top:0}
+.qa .q .num{
+  font-family:var(--font-display);font-weight:700;font-size:14px;
+  color:var(--ps-tomato);width:28px;flex:0 0 28px;line-height:1.5;
+}
+.qa .q .qbody{flex:1;font-size:14.5px;line-height:1.55}
+.qa .q .qbody b{color:var(--ps-charcoal);font-weight:600}
+
+/* ===== Timeline gantt ===== */
+.timeline{
+  margin-top:24px;
+  background:var(--ps-paper);
+  border:1px solid var(--ps-line);
+  border-radius:20px;padding:24px 28px;
+}
+.tl-row{
+  display:grid;grid-template-columns:200px 1fr;
+  gap:18px;align-items:center;
+  padding:8px 0;
+}
+.tl-row .name{font-size:13.5px;font-weight:600;color:var(--ps-charcoal)}
+.tl-row .name .week{display:block;font-weight:500;font-size:11.5px;color:var(--ps-charcoal-3);margin-top:2px;font-family:var(--font-mono)}
+.tl-track{
+  position:relative;height:18px;
+  background:var(--ps-cream);border-radius:999px;
+  border:1px solid var(--ps-line);
+}
+.tl-bar{
+  position:absolute;top:1px;bottom:1px;border-radius:999px;
+  display:flex;align-items:center;padding:0 12px;
+  font-size:10.5px;font-weight:700;color:#fff;letter-spacing:.04em;
+}
+.tl-bar.tomato{background:var(--ps-tomato)}
+.tl-bar.butter{background:var(--ps-butter-deep)}
+.tl-bar.basil{background:var(--ps-basil)}
+.tl-bar.charcoal{background:var(--ps-charcoal);color:var(--ps-cream)}
+.tl-axis{
+  display:grid;grid-template-columns:200px 1fr;
+  gap:18px;
+  border-top:1px solid var(--ps-line);
+  margin-top:10px;padding-top:10px;
+}
+.tl-axis .ticks{
+  display:grid;grid-template-columns:repeat(12,1fr);
+  font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ps-charcoal-3);
+}
+.tl-axis .ticks span{text-align:center}
+
+/* ===== Footer ===== */
+footer.foot{
+  margin-top:80px;padding-top:32px;
+  border-top:1px solid var(--ps-line);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:var(--ps-charcoal-3);
+}
+footer.foot .mark{font-family:var(--font-display);font-weight:700;color:var(--ps-charcoal)}
+
+/* ===== TOC ===== */
+.toc{
+  background:var(--ps-cream-deep);
+  border:1px solid var(--ps-line);
+  border-radius:18px;padding:22px 26px;
+  margin-bottom:56px;
+}
+.toc .l{
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ps-charcoal-3);margin-bottom:14px;
+}
+.toc ol{
+  list-style:none;padding:0;margin:0;
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:6px 22px;counter-reset:tocnum;
+}
+.toc ol li{counter-increment:tocnum;display:flex;gap:10px;font-size:14px}
+.toc ol li::before{
+  content:counter(tocnum,decimal-leading-zero);
+  font-family:var(--font-mono);font-size:11px;font-weight:600;
+  color:var(--ps-tomato);min-width:24px;padding-top:2px;
+}
+.toc ol li a{color:var(--ps-charcoal);text-decoration:none;font-weight:500}
+.toc ol li a:hover{color:var(--ps-tomato)}
+
+@media (max-width:720px){
+  .doc{padding:32px 20px 80px}
+  .masthead{padding:32px 28px;border-radius:24px}
+  h1.title{font-size:44px}
+  .tldr{grid-template-columns:1fr}
+  .phase-head{flex-direction:column;gap:8px}
+  .phase-num{font-size:36px;min-width:0}
+  h2.phase-title{font-size:30px}
+  .toc ol{grid-template-columns:1fr}
+  .tl-row, .tl-axis{grid-template-columns:1fr}
+  .tl-axis .ticks{grid-template-columns:repeat(6,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- ============= MASTHEAD ============= -->
+  <header class="masthead">
+    <div class="wm">
+      <span class="mark">P</span>
+      <span>Pantry<span class="spin">Spin</span></span>
+    </div>
+    <div class="eyebrow">Engineering plan · v1 · May 2026</div>
+    <h1 class="title">From <span class="accent">prototype</span> to <span class="accent2">production</span>.</h1>
+    <p class="lede">Everything you need to do — in order — to turn the current browser-only prototype into a real, hosted, multi-user web app you can confidently put in front of strangers.</p>
+
+    <div class="meta-strip">
+      <div class="meta-item">
+        <div class="l">Today</div>
+        <div class="v">Babel-in-browser SPA</div>
+      </div>
+      <div class="meta-item">
+        <div class="l">Target</div>
+        <div class="v">Hosted, multi-user, PWA</div>
+      </div>
+      <div class="meta-item">
+        <div class="l">Estimate</div>
+        <div class="v">10–14 weeks · solo dev</div>
+      </div>
+      <div class="meta-item">
+        <div class="l">Owner</div>
+        <div class="v">You</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============= TL;DR ============= -->
+  <div class="tldr">
+    <div class="tldr-card tomato">
+      <div class="num">9</div>
+      <div class="l">Phases, each shippable on its own. Don't skip ahead.</div>
+    </div>
+    <div class="tldr-card basil">
+      <div class="num">3</div>
+      <div class="l">Hard prerequisites before users: build system, backend, auth.</div>
+    </div>
+    <div class="tldr-card butter">
+      <div class="num">~12 wk</div>
+      <div class="l">Realistic timeline solo, faster with a small team or AI pair.</div>
+    </div>
+  </div>
+
+  <!-- ============= TOC ============= -->
+  <nav class="toc">
+    <div class="l">Contents</div>
+    <ol>
+      <li><a href="#audit">Where the prototype actually stands</a></li>
+      <li><a href="#p1">Engineering foundation</a></li>
+      <li><a href="#p2">Backend &amp; data layer</a></li>
+      <li><a href="#p3">Authentication &amp; accounts</a></li>
+      <li><a href="#p4">Real recipe &amp; ingredient content</a></li>
+      <li><a href="#p5">Hardening core features</a></li>
+      <li><a href="#p6">Responsive, mobile, PWA, a11y</a></li>
+      <li><a href="#p7">Quality, observability, testing</a></li>
+      <li><a href="#p8">Security, privacy, compliance</a></li>
+      <li><a href="#p9">Launch infra &amp; growth surfaces</a></li>
+      <li><a href="#questions">Decisions still to make</a></li>
+      <li><a href="#timeline">Suggested 12-week timeline</a></li>
+    </ol>
+  </nav>
+
+  <!-- ============= AUDIT ============= -->
+  <section class="phase" id="audit">
+    <div class="phase-head">
+      <div class="phase-num">00</div>
+      <div class="phase-head-text">
+        <div class="phase-eyebrow"><span>Baseline</span><span class="dot"></span><span class="effort">2 hr review</span></div>
+        <h2 class="phase-title">Where the prototype actually stands.</h2>
+        <p class="phase-intro">Before estimating, be honest about what you have. The PantrySpin prototype is a <em>design-quality</em> single-page app — beautiful, functional locally, but not a product. Here's the gap.</p>
+      </div>
+    </div>
+
+    <ul class="tasks">
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Runs entirely in the browser via Babel standalone.</b><span class="sub">React + JSX is transpiled at page load. Fine for previews, lethal for users — slow first paint, no tree-shaking, no minification.</span></div>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>All state lives in <code>localStorage</code>.</b><span class="sub"><code>ps_pantry</code>, <code>ps_saved</code>, <code>ps_grocery</code>, <code>ps_user_recipes</code>, <code>ps_custom_ings</code>, <code>ps_ing_overrides</code>, <code>ps_onboarded</code> — wiping the browser wipes the account. Sharing across devices is impossible.</span></div>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Recipes &amp; ingredients are hard-coded in <code>data.js</code>.</b><span class="sub">Curated, charming, finite. Won't scale past the demo set.</span></div>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>No accounts, no auth, no server.</b><span class="sub">No way to recover data, share, sync, or monetize.</span></div>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Fixed viewport <code>width=1280</code>.</b><span class="sub">Desktop-only. Phones get a zoomed-out mess. The whole product concept (pantry while shopping, recipe while cooking) is mobile-first.</span></div>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Zero observability.</b><span class="sub">No error tracking, no analytics, no logs. You won't know if it breaks for someone.</span></div>
+      </li>
+    </ul>
+
+    <div class="callout">
+      <span class="ic">✓</span>
+      <div class="ctext"><strong>The good news:</strong> the visual design system, component architecture, and core interactions (wheel spin, match scoring, cooking mode, onboarding) are solid. You're not rewriting the product — you're rewriting the substrate underneath it.</div>
+    </div>
+  </section>
+
+  <!-- ============= PHASE 1: ENG FOUNDATION ============= -->
+  <section class="phase" id="p1">
+    <div class="phase-head">
+      <div class="phase-num">01</div>
+      <div class="phase-head-text">
+        <div class="phase-eyebrow"><span>Phase 1</span><span class="dot"></span><span>Week 1</span><span class="dot"></span><span class="effort">~5 days</span></div>
+        <h2 class="phase-title">Engineering foundation.</h2>
+        <p class="phase-intro">Replace the in-browser Babel pipeline with a real build, type the code, and set up the tooling you'll rely on for the next year. Don't add features in this phase — just port what exists.</p>
+      </div>
+    </div>
+
+    <ul class="tasks">
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Initialize a Vite + React + TypeScript project.</b><span class="sub">Vite for dev server + bundler; TypeScript for the inevitable refactor pain you'll avoid by typing the data shapes now. <code>pnpm</code> or <code>bun</code> for the package manager.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Port the file structure into <code>src/</code>.</b><span class="sub">Move <code>App.jsx</code> → <code>src/App.tsx</code>, screens into <code>src/screens/</code>, modals into <code>src/components/modals/</code>, shared bits into <code>src/components/</code>, <code>data.js</code> into <code>src/data/</code>. Convert <code>window.X</code> globals to ES module exports.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Define core TypeScript types.</b><span class="sub"><code>Ingredient</code>, <code>PantryItem</code>, <code>Recipe</code>, <code>RecipeStep</code>, <code>GroceryItem</code>, <code>UserPrefs</code>. Type the match-score function, the wheel state, the route enum.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Add ESLint + Prettier + Husky pre-commit.</b><span class="sub">Block commits that don't lint or type-check. Future-you will thank you when refactoring at 11pm.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Move the CSS into a single source of truth.</b><span class="sub">Lift the design tokens into <code>src/styles/tokens.css</code> (already factored as <code>colors_and_type.css</code>). Per-component styles can stay as plain CSS modules — no need for Tailwind unless you want it.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Add a real router.</b><span class="sub">Replace the <code>route</code> string-state machine in <code>App.jsx</code> with <code>react-router</code> or <code>tanstack-router</code>. Real URLs (<code>/pantry</code>, <code>/recipes/:id</code>) means link sharing, browser back/forward, and analytics that make sense.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Stand up a state library.</b><span class="sub"><code>zustand</code> for client state (pantry, grocery, UI flags) is plenty — Redux is overkill. Pair with <code>@tanstack/react-query</code> for server state once the API exists.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+    </ul>
+
+    <div class="stack">
+      <span class="label">Suggested stack</span>
+      <span class="pill primary">Vite</span>
+      <span class="pill primary">React 18</span>
+      <span class="pill primary">TypeScript</span>
+      <span class="pill">react-router</span>
+      <span class="pill">zustand</span>
+      <span class="pill">@tanstack/react-query</span>
+      <span class="pill">ESLint</span>
+      <span class="pill">Prettier</span>
+      <span class="pill">pnpm</span>
+    </div>
+  </section>
+
+  <!-- ============= PHASE 2: BACKEND ============= -->
+  <section class="phase" id="p2">
+    <div class="phase-head">
+      <div class="phase-num">02</div>
+      <div class="phase-head-text">
+        <div class="phase-eyebrow"><span>Phase 2</span><span class="dot"></span><span>Weeks 2–3</span><span class="dot"></span><span class="effort">~8 days</span></div>
+        <h2 class="phase-title">Backend &amp; data layer.</h2>
+        <p class="phase-intro">Move state out of <code>localStorage</code> and into a real database behind a real API. This is the single biggest leap toward "production." Pick a backend posture (DIY vs BaaS) and commit.</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span class="ic">?</span>
+      <div class="ctext"><strong>Decision point.</strong> For a solo dev shipping fast, <strong>Supabase</strong> (Postgres + Auth + Storage + RLS) or <strong>Convex</strong> get you 80% of this phase for free. If you want full control, <strong>Node/Hono + Postgres on Fly.io</strong> is the more standard path. Pick one before writing schema.</div>
+    </div>
+
+    <ul class="tasks">
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Design the relational schema.</b><span class="sub">Roughly the tables below. Use UUIDs as primary keys, <code>created_at</code> / <code>updated_at</code> on every table, soft-delete (<code>deleted_at</code>) on user-content tables.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+    </ul>
+
+    <div class="schema">
+      <div class="schema-head">📋 Proposed Postgres schema · <span class="tbl">pantryspin</span></div>
+      <table>
+        <tr><td>users</td><td>uuid pk</td><td>email, display_name, avatar_url, onboarded_at</td></tr>
+        <tr><td>ingredients</td><td>uuid pk</td><td>name (unique), category, color, swatch, is_global, created_by</td></tr>
+        <tr><td>pantry_items</td><td>user_id fk</td><td>ingredient_id, expires_at, location, quantity, added_at</td></tr>
+        <tr><td>recipes</td><td>uuid pk</td><td>name, category, time_min, servings, difficulty, illus_key, is_global</td></tr>
+        <tr><td>recipe_ingredients</td><td>recipe_id fk</td><td>ingredient_id, qty, unit, is_optional, sub_for</td></tr>
+        <tr><td>recipe_steps</td><td>recipe_id fk</td><td>step_num, body, timer_seconds</td></tr>
+        <tr><td>recipe_tags</td><td>recipe_id fk</td><td>tag (vegetarian, comfort, healthy, ...)</td></tr>
+        <tr><td>saved_recipes</td><td>user_id fk</td><td>recipe_id, saved_at</td></tr>
+        <tr><td>grocery_items</td><td>user_id fk</td><td>ingredient_id (nullable), free_text, qty, category, checked_at, source_recipe_id</td></tr>
+        <tr><td>user_prefs</td><td>user_id pk</td><td>diet, avoid[], max_time, difficulty, servings, priority</td></tr>
+        <tr><td>cook_sessions</td><td>user_id fk</td><td>recipe_id, started_at, completed_at, rating</td></tr>
+      </table>
+    </div>
+
+    <ul class="tasks">
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Decide on global vs per-user content boundary.</b><span class="sub">Global recipes &amp; ingredients are shared, read-only. User-created ones (<code>is_global=false</code>) belong only to the creator. Mirror this exactly in your row-level-security policies.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Build the API surface.</b><span class="sub">REST or tRPC — both are fine. The endpoints map 1:1 to what <code>App.jsx</code> already does: <code>GET /pantry</code>, <code>POST /pantry</code>, <code>DELETE /pantry/:id</code>, <code>GET /recipes</code>, <code>POST /recipes</code>, <code>POST /saved</code>, <code>GET /grocery</code>, <code>PATCH /grocery/:id</code>, <code>GET /me</code>, <code>PATCH /me/prefs</code>.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Write a one-shot migration to seed the current <code>data.js</code>.</b><span class="sub">All the ingredients and recipes you already curated become the initial global content. Don't lose this — it's the soul of the product.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Add input validation at the edge.</b><span class="sub"><code>zod</code> schemas shared client + server. Reject malformed payloads before they hit the DB. Validate every field that comes from the user — especially user-created recipes and ingredient overrides.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Add a local-first sync strategy.</b><span class="sub">The pantry-while-shopping use case <em>needs</em> offline. Keep <code>localStorage</code> as a cache, reconcile on reconnect. <code>react-query</code> + a service worker handles most of this; for true offline-write, look at <code>powersync</code>, <code>RxDB</code>, or just queue mutations.</span></div>
+        <span class="badge later">Later</span>
+      </li>
+    </ul>
+
+    <div class="stack">
+      <span class="label">If you pick Supabase</span>
+      <span class="pill primary">Supabase</span>
+      <span class="pill">Postgres</span>
+      <span class="pill">RLS policies</span>
+      <span class="pill">@supabase/supabase-js</span>
+      <span class="pill">zod</span>
+    </div>
+    <div class="stack">
+      <span class="label">If you pick DIY</span>
+      <span class="pill primary">Hono</span>
+      <span class="pill primary">Postgres (Neon)</span>
+      <span class="pill">Drizzle ORM</span>
+      <span class="pill">Fly.io</span>
+      <span class="pill">zod</span>
+    </div>
+  </section>
+
+  <!-- ============= PHASE 3: AUTH ============= -->
+  <section class="phase" id="p3">
+    <div class="phase-head">
+      <div class="phase-num">03</div>
+      <div class="phase-head-text">
+        <div class="phase-eyebrow"><span>Phase 3</span><span class="dot"></span><span>Week 4</span><span class="dot"></span><span class="effort">~3 days</span></div>
+        <h2 class="phase-title">Authentication &amp; accounts.</h2>
+        <p class="phase-intro">No accounts = no product. Pick a low-friction auth model and build the smallest possible set of screens around it.</p>
+      </div>
+    </div>
+
+    <ul class="tasks">
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Magic-link email + "Sign in with Apple/Google".</b><span class="sub">Skip passwords entirely. Magic links work everywhere, Apple/Google handle 90% of mobile traffic. Supabase Auth or Clerk do this out of the box.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Allow guest mode &amp; later upgrade.</b><span class="sub">The current onboarding doesn't ask for an account — keep that. Create an anonymous user on first launch, store the token, and let them merge into a real account when they sign in. Critical for retention; nobody signs up before they see value.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Migrate the existing <code>localStorage</code> state on first login.</b><span class="sub">Bulk-POST the user's pantry, saved recipes, grocery list, and prefs to the server on first authenticated load. Then clear local. One-way trip.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Account settings screen.</b><span class="sub">Email, display name, avatar, sign out, delete account (with grace period). Required for app store compliance and GDPR.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Session refresh + multi-device.</b><span class="sub">JWT with refresh tokens, or rely on whatever your auth provider gives you. Test signing in on two devices simultaneously before launch.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============= PHASE 4: CONTENT ============= -->
+  <section class="phase" id="p4">
+    <div class="phase-head">
+      <div class="phase-num">04</div>
+      <div class="phase-head-text">
+        <div class="phase-eyebrow"><span>Phase 4</span><span class="dot"></span><span>Weeks 5–6</span><span class="dot"></span><span class="effort">~8 days · ongoing</span></div>
+        <h2 class="phase-title">Real recipe &amp; ingredient content.</h2>
+        <p class="phase-intro">The product is only as good as what the wheel can land on. The demo's ~30 recipes won't sustain a returning user past week one. This phase is half engineering, half content ops.</p>
+      </div>
+    </div>
+
+    <ul class="tasks">
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Decide where recipes come from.</b><span class="sub">Three viable paths: <b>(a)</b> curate yourself (slow, high-quality, copyrightable), <b>(b)</b> license a feed (Spoonacular, Edamam — both have free tiers but watch ToS), <b>(c)</b> generate with LLMs against a strict schema. Most likely answer: <em>license to bootstrap, curate top picks, let users contribute</em>.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Build an ingredient canonicalization layer.</b><span class="sub">"Bell Pepper", "Red Pepper", "Capsicum" should all match. Build an aliases table; use string similarity + manual review for new entries.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Replace the SVG illustrations with real food imagery.</b><span class="sub">The brand SVG thumbnails are charming for a prototype but won't survive next to real apps. Commission a photo set, use a stock service (Pexels / Unsplash with food filters), or generate on-brand illustrations consistently. Store in object storage, serve via CDN with sized variants.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Build a tiny admin tool for content ops.</b><span class="sub">Even an internal-only Retool / Tooljet board. You'll need to add, edit, retire, and feature recipes weekly.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Define your minimum recipe surface.</b><span class="sub">200 recipes spread across categories &amp; difficulty is a respectable floor. Anything less and the wheel feels repetitive within a session.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+    </ul>
+
+    <div class="callout alert">
+      <span class="ic">!</span>
+      <div class="ctext"><strong>Legal watch-out.</strong> Recipe text is borderline for copyright (ingredient lists alone aren't, but instructions usually are). Don't scrape Bon Appétit. If you license a feed, read the attribution &amp; commercial-use clauses before launch.</div>
+    </div>
+  </section>
+
+  <!-- ============= PHASE 5: HARDENING ============= -->
+  <section class="phase" id="p5">
+    <div class="phase-head">
+      <div class="phase-num">05</div>
+      <div class="phase-head-text">
+        <div class="phase-eyebrow"><span>Phase 5</span><span class="dot"></span><span>Week 7</span><span class="dot"></span><span class="effort">~5 days</span></div>
+        <h2 class="phase-title">Hardening core features.</h2>
+        <p class="phase-intro">The prototype works on the happy path. Production means the long tail of weird states — empty pantries, expired ingredients, abandoned cook sessions, conflicting prefs.</p>
+      </div>
+    </div>
+
+    <ul class="tasks">
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Real expiry dates, not "days from now."</b><span class="sub">Currently <code>expiresInDays</code> is a static int. Store an actual <code>expires_at</code> timestamp; compute "expiring in 2 days" at render. Add a daily background job to surface expiring items via notification.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Tune the match-score algorithm.</b><span class="sub">Look at <code>data.js</code> → <code>matchScore</code>. Add weights for expiring ingredients, penalize recipes that need 4+ shop items, factor user prefs (max time, difficulty, diet). Expose ranking signals in an admin debug view.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Wheel fairness &amp; weighting.</b><span class="sub">Right now the spin picks uniformly from top-4. Weight by match score and freshness so the wheel feels right but never feels rigged. Log every spin → result pair for tuning later.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Cooking-mode robustness.</b><span class="sub">Wake-lock so the screen doesn't dim. Pause/resume when user backgrounds the tab. Read-aloud option (Web Speech API) is huge for actual cooking.</span></div>
+        <span class="badge later">Later</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Empty-state polish &amp; edge cases.</b><span class="sub">Pantry with 0 items shouldn't allow spin. Recipe with all expiring ingredients should get a tag. Grocery list with 0 items has its own onboarding nudge.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============= PHASE 6: RESPONSIVE ============= -->
+  <section class="phase" id="p6">
+    <div class="phase-head">
+      <div class="phase-num">06</div>
+      <div class="phase-head-text">
+        <div class="phase-eyebrow"><span>Phase 6</span><span class="dot"></span><span>Week 8</span><span class="dot"></span><span class="effort">~5 days</span></div>
+        <h2 class="phase-title">Responsive, mobile, PWA, accessibility.</h2>
+        <p class="phase-intro">The use case is mobile — at the grocery store, at the stove. The prototype is 1280px-only. Fix this before any real user touches it.</p>
+      </div>
+    </div>
+
+    <ul class="tasks">
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Strip the fixed viewport.</b><span class="sub">Change <code>&lt;meta name="viewport" content="width=1280"&gt;</code> to <code>width=device-width, initial-scale=1</code>. Then start the real responsive work.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Mobile shell: bottom tab bar instead of sidebar.</b><span class="sub">5 destinations max — Spin, Pantry, Recipes, Grocery, Me. Sidebar stays for ≥1024px.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Reflow each screen for ~390px wide.</b><span class="sub">Spin: wheel becomes hero, matches scroll horizontally. Pantry: single-column cards. Recipe detail: stack image / meta / ingredients / steps vertically.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Install as PWA.</b><span class="sub">Manifest, icons, service worker. Cache shell + last-seen data. Add-to-home-screen prompt after 2nd session.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Accessibility pass.</b><span class="sub">Keyboard nav through the wheel, focus rings restored, ARIA on modal close, alt text on illustrations, contrast check on butter-on-cream combos. Test with VoiceOver on iOS.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Touch targets &amp; gesture polish.</b><span class="sub">44px minimum hit area. Swipe-to-delete on pantry chips. Pull-to-refresh on lists. The wheel needs an actual flick-to-spin gesture eventually.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============= PHASE 7: QUALITY ============= -->
+  <section class="phase" id="p7">
+    <div class="phase-head">
+      <div class="phase-num">07</div>
+      <div class="phase-head-text">
+        <div class="phase-eyebrow"><span>Phase 7</span><span class="dot"></span><span>Week 9</span><span class="dot"></span><span class="effort">~4 days · then ongoing</span></div>
+        <h2 class="phase-title">Quality, observability, testing.</h2>
+        <p class="phase-intro">If you can't see it break, you can't fix it. Wire up monitoring before users arrive, not after.</p>
+      </div>
+    </div>
+
+    <ul class="tasks">
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Error tracking.</b><span class="sub">Sentry, free tier is plenty. Capture unhandled exceptions, source-map your bundles, alert to a Slack/Discord channel.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Product analytics.</b><span class="sub">PostHog (self-host or cloud) or Plausible + Mixpanel. Instrument the 8–10 events that matter: signup, onboarding completed, pantry item added, spin, recipe viewed, recipe saved, cook started, cook completed, grocery added, account deleted.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Server logs &amp; uptime.</b><span class="sub">Whatever your backend host gives you, plus an external pinger (BetterStack, UptimeRobot) on the public health endpoint.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Unit tests on the algorithms.</b><span class="sub"><code>matchScore</code>, the wheel category mapping, the spin-target math. These are pure functions; tests are cheap and catch regressions cold. Vitest.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>End-to-end smoke tests.</b><span class="sub">Playwright covering: complete onboarding → spin → save recipe → start cooking → finish cooking → add to grocery. Run on every PR.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Performance budget.</b><span class="sub">First contentful paint &lt; 1.5s on a mid-tier Android over 4G. Wheel canvas under 60fps. Lighthouse CI as a PR check.</span></div>
+        <span class="badge later">Later</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============= PHASE 8: SECURITY ============= -->
+  <section class="phase" id="p8">
+    <div class="phase-head">
+      <div class="phase-num">08</div>
+      <div class="phase-head-text">
+        <div class="phase-eyebrow"><span>Phase 8</span><span class="dot"></span><span>Week 10</span><span class="dot"></span><span class="effort">~3 days</span></div>
+        <h2 class="phase-title">Security, privacy, compliance.</h2>
+        <p class="phase-intro">Boring, mandatory, easy to underestimate. Knock it out in one focused week — most of it is configuration, not code.</p>
+      </div>
+    </div>
+
+    <ul class="tasks">
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Rate limit the API.</b><span class="sub">Per-user and per-IP. Especially on auth, search, and the LLM-backed endpoints if you add them.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Content Security Policy + standard security headers.</b><span class="sub">CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy. Use <code>helmet</code> if Node; most hosts have presets.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Privacy policy, terms of service, cookie banner.</b><span class="sub">Even for a hobby launch — the App Store and EU require both. Use a generator (Termly, iubenda) and have a lawyer eyeball before scale.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>GDPR / CCPA basics.</b><span class="sub">Account deletion that actually deletes. Data export endpoint (<code>GET /me/export</code> → JSON). Cookie consent if you ship third-party analytics in the EU.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Secrets management.</b><span class="sub">Nothing in git. Use your host's env-var store. Rotate any keys that ever touched your laptop before launch.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Backups.</b><span class="sub">Daily DB snapshot, 30-day retention, restore drill done <em>at least once</em> before launch. Untested backups don't count.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============= PHASE 9: LAUNCH ============= -->
+  <section class="phase" id="p9">
+    <div class="phase-head">
+      <div class="phase-num">09</div>
+      <div class="phase-head-text">
+        <div class="phase-eyebrow"><span>Phase 9</span><span class="dot"></span><span>Weeks 11–12</span><span class="dot"></span><span class="effort">~7 days</span></div>
+        <h2 class="phase-title">Launch infra &amp; growth surfaces.</h2>
+        <p class="phase-intro">The product is shippable. Now make sure it can be deployed, marketed, supported, and grown — without you babysitting it 24/7.</p>
+      </div>
+    </div>
+
+    <ul class="tasks">
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>CI/CD with preview deploys.</b><span class="sub">GitHub Actions or Vercel/Netlify built-in. Every PR gets a unique URL. <code>main</code> deploys to staging; tagged releases promote to prod. Manual approval on prod for the first month.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Custom domain + TLS + email.</b><span class="sub"><code>pantryspin.app</code> or similar. Set up transactional email via Resend or Postmark — you'll need it for magic links, weekly digests, expiring-pantry alerts.</span></div>
+        <span class="badge must">Must</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Marketing landing page.</b><span class="sub">Separate route or subdomain. Three sections: hero with wheel demo, the three core jobs (reduce waste, decide faster, shop less), email capture. Keep it shorter than this document.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Push notifications &amp; weekly digest.</b><span class="sub">Web Push for "you have 2 items expiring tomorrow." Weekly email summarizing what you cooked + suggesting 3 recipes from your pantry.</span></div>
+        <span class="badge later">Later</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Native shell — Capacitor wrap.</b><span class="sub">When you're ready for iOS/Android, wrap the PWA in Capacitor for App Store distribution. Reuse 95% of the codebase. Apple needs an explicit account-deletion path; Android needs a privacy form.</span></div>
+        <span class="badge later">Later</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <div class="body"><b>Support &amp; feedback loop.</b><span class="sub">In-app "Send feedback" button → routes to email or a Linear/Tally form. Public changelog. Status page if you reach &gt;1k DAU.</span></div>
+        <span class="badge soon">Soon</span>
+      </li>
+    </ul>
+
+    <div class="callout">
+      <span class="ic">→</span>
+      <div class="ctext"><strong>Closed beta first.</strong> Don't skip this. Invite 25–50 people, give them a Discord channel, fix their top complaints, then open up. Public launches are very hard to redo.</div>
+    </div>
+  </section>
+
+  <!-- ============= OPEN QUESTIONS ============= -->
+  <section class="phase" id="questions">
+    <div class="phase-head">
+      <div class="phase-num">10</div>
+      <div class="phase-head-text">
+        <div class="phase-eyebrow"><span>Decisions</span><span class="dot"></span><span>Resolve before week 1</span></div>
+        <h2 class="phase-title">Decisions still to make.</h2>
+        <p class="phase-intro">Nine open questions whose answers shape every phase above. Don't start Phase 1 with these unresolved — the cost of changing them later compounds.</p>
+      </div>
+    </div>
+
+    <div class="qa">
+      <h3>Before you write any code</h3>
+      <p>Answers to these determine your stack, your timeline, your hosting bill, and your TOS.</p>
+
+      <div class="q"><div class="num">01</div><div class="qbody"><b>Backend posture — BaaS or DIY?</b> Supabase/Convex saves 2 weeks but locks the data model into their conventions. DIY keeps options open at the cost of velocity. Pick one this week.</div></div>
+      <div class="q"><div class="num">02</div><div class="qbody"><b>Free, freemium, or paid?</b> Free forever (ads / future tier), free with a paid Pro ($3–5/mo for things like meal planning + family share), or paid upfront. Affects whether Stripe is in scope.</div></div>
+      <div class="q"><div class="num">03</div><div class="qbody"><b>Recipes — license, generate, or curate?</b> Cheapest answer is license a feed to bootstrap; most defensible is curated + LLM-assisted. Decide before phase 4.</div></div>
+      <div class="q"><div class="num">04</div><div class="qbody"><b>Native or PWA only?</b> PWA covers 90% of needs at 10% of the cost. Apple's PWA support is improving but still second-class. If you need notifications on iOS today, Capacitor wrapper is required.</div></div>
+      <div class="q"><div class="num">05</div><div class="qbody"><b>Multi-user households?</b> Sharing a pantry across roommates / a family changes the data model significantly. Cheaper to design for it now than retrofit.</div></div>
+      <div class="q"><div class="num">06</div><div class="qbody"><b>Barcode scanning &amp; receipt OCR?</b> Highest-value feature for the pantry-tracking job, also the most expensive. v1 or v2?</div></div>
+      <div class="q"><div class="num">07</div><div class="qbody"><b>AI features in-scope for v1?</b> "Spin again but vegetarian," "what can I make in 15 minutes," recipe-from-photo. These ride on the wheel concept beautifully but cost $$ per call.</div></div>
+      <div class="q"><div class="num">08</div><div class="qbody"><b>Where do you host?</b> Vercel + Supabase is the path of least resistance. Cloudflare Workers + D1 is cheaper at scale. Fly.io + Postgres if you want one stack to learn.</div></div>
+      <div class="q"><div class="num">09</div><div class="qbody"><b>What's the launch metric?</b> "1,000 weekly active users with &gt;3 spins/week" is a real bar. "Got it on the App Store" is not. Pick something measurable so phase 7 instruments toward it.</div></div>
+    </div>
+  </section>
+
+  <!-- ============= TIMELINE ============= -->
+  <section class="phase" id="timeline">
+    <div class="phase-head">
+      <div class="phase-num">11</div>
+      <div class="phase-head-text">
+        <div class="phase-eyebrow"><span>Plan</span><span class="dot"></span><span class="effort">12 weeks · solo</span></div>
+        <h2 class="phase-title">Suggested 12-week timeline.</h2>
+        <p class="phase-intro">Aggressive but not insane for one engineer. Add 50% if part-time. Roughly halve with a co-founder who owns content + ops while you handle code.</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-row">
+        <div class="name">Foundation<span class="week">Phase 1 · Wk 1</span></div>
+        <div class="tl-track"><div class="tl-bar tomato" style="left:0%;width:8.33%">Vite + TS</div></div>
+      </div>
+      <div class="tl-row">
+        <div class="name">Backend &amp; data<span class="week">Phase 2 · Wk 2–3</span></div>
+        <div class="tl-track"><div class="tl-bar tomato" style="left:8.33%;width:16.66%">Schema · API · seed</div></div>
+      </div>
+      <div class="tl-row">
+        <div class="name">Auth &amp; accounts<span class="week">Phase 3 · Wk 4</span></div>
+        <div class="tl-track"><div class="tl-bar tomato" style="left:25%;width:8.33%">Sign-in · migrate</div></div>
+      </div>
+      <div class="tl-row">
+        <div class="name">Recipe content<span class="week">Phase 4 · Wk 5–6</span></div>
+        <div class="tl-track"><div class="tl-bar butter" style="left:33.33%;width:16.66%">Sourcing · images · admin</div></div>
+      </div>
+      <div class="tl-row">
+        <div class="name">Hardening<span class="week">Phase 5 · Wk 7</span></div>
+        <div class="tl-track"><div class="tl-bar butter" style="left:50%;width:8.33%">Edge cases · matching</div></div>
+      </div>
+      <div class="tl-row">
+        <div class="name">Mobile &amp; a11y<span class="week">Phase 6 · Wk 8</span></div>
+        <div class="tl-track"><div class="tl-bar butter" style="left:58.33%;width:8.33%">Responsive · PWA</div></div>
+      </div>
+      <div class="tl-row">
+        <div class="name">Quality &amp; analytics<span class="week">Phase 7 · Wk 9</span></div>
+        <div class="tl-track"><div class="tl-bar basil" style="left:66.66%;width:8.33%">Sentry · tests</div></div>
+      </div>
+      <div class="tl-row">
+        <div class="name">Security &amp; compliance<span class="week">Phase 8 · Wk 10</span></div>
+        <div class="tl-track"><div class="tl-bar basil" style="left:75%;width:8.33%">CSP · GDPR · backups</div></div>
+      </div>
+      <div class="tl-row">
+        <div class="name">Closed beta<span class="week">Phase 9a · Wk 11</span></div>
+        <div class="tl-track"><div class="tl-bar charcoal" style="left:83.33%;width:8.33%">25–50 users</div></div>
+      </div>
+      <div class="tl-row">
+        <div class="name">Public launch<span class="week">Phase 9b · Wk 12</span></div>
+        <div class="tl-track"><div class="tl-bar charcoal" style="left:91.66%;width:8.33%">🚀</div></div>
+      </div>
+
+      <div class="tl-axis">
+        <div></div>
+        <div class="ticks">
+          <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span>
+          <span>W7</span><span>W8</span><span>W9</span><span>W10</span><span>W11</span><span>W12</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span class="ic">!</span>
+      <div class="ctext"><strong>Reality check.</strong> Every solo launch slips. Build a 2-week buffer into the back end of this plan and protect it. Cut scope before cutting quality — drop barcode scanning, drop the email digest, drop the native wrap, but ship something that works.</div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span><span class="mark">Pantry<span style="color:var(--ps-tomato)">Spin</span></span> · Production Roadmap v1</span>
+    <span>Generated May 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
